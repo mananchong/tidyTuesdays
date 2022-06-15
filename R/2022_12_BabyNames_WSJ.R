@@ -1,13 +1,19 @@
 
-ragg_png = function(..., res = 150) {
-  ragg::agg_png(..., res = res, units = "in")
-}
-
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' 加载包
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## packages
 library(tidyverse)
 library(colorspace)
 library(ggtext)
 library(systemfonts)
+
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' 基本设置
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ragg_png = function(..., res = 150) {
+  ragg::agg_png(..., res = res, units = "in")
+}
 
 theme_set(theme_minimal(base_size = 24, base_family = "Sentient"))
 theme_update(
@@ -44,10 +50,9 @@ theme_update(
   plot.margin = margin(75, 60, 30, 60)
 )
 
-
-## Data
-
-
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' 数据处理
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 rds <- here::here("data", "2022_12", "df_names_div_sex_letter.Rds")
 
 if(!file.exists(rds)) {
@@ -177,10 +182,9 @@ annotation <-
   left_join(df_names_div_std) 
 ```
 
-
-## Plot
-
-
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' 做图
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## WSJ vaccination heatmap-like color palette from
 ## https://github.com/blmoore/blogR/blob/master/R/measles_incidence_heatmap.R
 cols <- c(colorRampPalette(c("#e7f0fa", "#c9e2f6", "#95cbee", "#0099dc",
@@ -327,7 +331,6 @@ plot_names_div_period +
 
 ggsave(here::here("plots", "2022_12", "WSJ_edition", "long_version", "2022_12_Babynames_Diversity_WSJ_period_long.pdf"), 
        width = 18, height = 31, device = cairo_pdf)
-
 
 plot_names_div_all +
   facet_wrap(~ sex, ncol = 1, scales = "free_x")  +
